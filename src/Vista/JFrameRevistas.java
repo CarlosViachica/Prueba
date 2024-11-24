@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Vista;
 
 import Modelo.*;
@@ -10,7 +6,6 @@ import javax.swing.table.DefaultTableColumnModel;
 import java.sql.Time;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 
 /**
  *
@@ -25,49 +20,47 @@ public class JFrameRevistas extends javax.swing.JFrame {
         initComponents();
         jTextNumero.setEnabled(false);
     }
-    
-    public void limpiarCampos(){
-       jTextNumero.setText("");
-       jTextTitulo.setText("");
-       jTextAyo.setText(""); 
-       jTextIssn.setText("");
-       jTextPrecio.setText("");
-       jTextHoraventa.setText("");
-   }
-    
-    public void obtenerDatos(){
-       List<Revista> revistas=new DAORevista().ObtenerDatos();
-       DefaultTableModel modelo= new DefaultTableModel();
-       String[] columnas={"Numero", "Titulo", "Ayo", 
-           "Issn", "precio", "Horaventa"};
-       modelo.setColumnIdentifiers (columnas);
-       for(Revista rev:revistas){
-           String[]renglon={Integer.toString(rev.getNumero()),rev.getTitulo(),
-               Integer.toString(rev.getAyo()), rev.getIssn(), Float.toString(rev.getPrecio()),
-               rev.getHoraventa().toString()};
-               modelo.addRow(renglon);
-       }
-       jTableRevista.setModel(modelo);
-   }
-    
-    
-    public void actualizarRevista(){
-       int num=Integer.parseInt(this.jTextNumero.getText());
-       String tit=this.jTextTitulo.getText();
-       int ay=Integer.parseInt(this.jTextAyo.getText());
-       String iss=this.jTextIssn.getText();
-       float pre=Float.parseFloat(this.jTextPrecio.getText());
-       Time hora=Time.valueOf(this.jTextHoraventa.getText());
-       
-       DAORevista dao=new DAORevista();
-       int res=dao.Actualizar(num, tit, ay, iss, pre, hora);
-       if(res==1){
-           JOptionPane.showMessageDialog(rootPane, "¡Revista Actualizada!");
-       }
-       else{
-           JOptionPane.showMessageDialog(rootPane, "¡Ocurrió un ERROR!");
-       }
-   }
+
+    public void limpiarCampos() {
+        jTextNumero.setText("");
+        jTextTitulo.setText("");
+        jTextAyo.setText("");
+        jTextIssn.setText("");
+        jTextPrecio.setText("");
+        jTextHoraventa.setText("");
+    }
+
+    public void obtenerDatos() {
+        List<Revista> revistas = new DAORevista().ObtenerDatos();
+        DefaultTableModel modelo = new DefaultTableModel();
+        String[] columnas = {"Numero", "Titulo", "Ayo",
+            "Issn", "precio", "Horaventa"};
+        modelo.setColumnIdentifiers(columnas);
+        for (Revista rev : revistas) {
+            String[] renglon = {Integer.toString(rev.getNumero()), rev.getTitulo(),
+                Integer.toString(rev.getAyo()), rev.getIssn(), Float.toString(rev.getPrecio()),
+                rev.getHoraventa().toString()};
+            modelo.addRow(renglon);
+        }
+        jTableRevista.setModel(modelo);
+    }
+
+    public void actualizarRevista() {
+        int num = Integer.parseInt(this.jTextNumero.getText());
+        String tit = this.jTextTitulo.getText();
+        int ay = Integer.parseInt(this.jTextAyo.getText());
+        String iss = this.jTextIssn.getText();
+        float pre = Float.parseFloat(this.jTextPrecio.getText());
+        Time hora = Time.valueOf(this.jTextHoraventa.getText());
+
+        DAORevista dao = new DAORevista();
+        int res = dao.Actualizar(num, tit, ay, iss, pre, hora);
+        if (res == 1) {
+            JOptionPane.showMessageDialog(rootPane, "¡Revista Actualizada!");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "¡Ocurrió un ERROR!");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -356,22 +349,22 @@ public class JFrameRevistas extends javax.swing.JFrame {
 
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
         // TODO add your handling code here:
-        String tit=jTextTitulo.getText();
-        int  ay=Integer.parseInt(jTextAyo.getText());
-        String iss=jTextIssn.getText();
-        String hora=(jTextHoraventa.getText());
-        Float pre=Float.parseFloat(jTextPrecio.getText());
-        if(tit.contentEquals("")||Integer.toString(ay).contentEquals("")||
-                 hora.contentEquals("")|| iss.contentEquals("")||
-                 pre==0) {
-            JOptionPane.showMessageDialog(rootPane, 
+        String tit = jTextTitulo.getText();
+        int ay = Integer.parseInt(jTextAyo.getText());
+        String iss = jTextIssn.getText();
+        String hora = (jTextHoraventa.getText());
+        Float pre = Float.parseFloat(jTextPrecio.getText());
+        if (tit.contentEquals("") || Integer.toString(ay).contentEquals("")
+                || hora.contentEquals("") || iss.contentEquals("")
+                || pre == 0) {
+            JOptionPane.showMessageDialog(rootPane,
                     "Todos los campos son obligatorios");
-        }else{
-            try{
-                Time horaTime=Time.valueOf(hora);
-                Revista rev=new DAORevista().Insertar(tit, ay, iss, pre, horaTime);
+        } else {
+            try {
+                Time horaTime = Time.valueOf(hora);
+                Revista rev = new DAORevista().Insertar(tit, ay, iss, pre, horaTime);
                 JOptionPane.showMessageDialog(rootPane, "Registro agregado");
-            }catch  (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(rootPane, "No se agregó el registro");
             }
@@ -382,26 +375,25 @@ public class JFrameRevistas extends javax.swing.JFrame {
 
     private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
         // TODO add your handling code here:
-         int fila=this.jTableRevista.getSelectedRow();
-        if (fila==-1){
+        int fila = this.jTableRevista.getSelectedRow();
+        if (fila == -1) {
             JOptionPane.showMessageDialog(rootPane, "Selecione un registro de la tabla");
-        } 
-        else{
-            try{
-            int id=Integer.parseInt((String)this.jTableRevista.getValueAt(fila, 0).toString());
-            String tit=(String)this.jTableRevista.getValueAt(fila, 1);
-            String ay=(String)this.jTableRevista.getValueAt(fila, 2).toString();
-            String iss=(String)this.jTableRevista.getValueAt(fila, 3);
-            String pre=(String)this.jTableRevista.getValueAt(fila, 4).toString();
-            java.sql.Time hora=java.sql.Time.valueOf((String)this.jTableRevista.getValueAt(fila, 5).toString());
-            
-            jTextNumero.setText(""+id);
-            jTextTitulo.setText(tit);
-            jTextAyo.setText(ay);
-            jTextIssn.setText(iss);
-            jTextPrecio.setText(pre);
-            jTextHoraventa.setText(String.valueOf(hora));
-            }catch(NumberFormatException e){
+        } else {
+            try {
+                int id = Integer.parseInt((String) this.jTableRevista.getValueAt(fila, 0).toString());
+                String tit = (String) this.jTableRevista.getValueAt(fila, 1);
+                String ay = (String) this.jTableRevista.getValueAt(fila, 2).toString();
+                String iss = (String) this.jTableRevista.getValueAt(fila, 3);
+                String pre = (String) this.jTableRevista.getValueAt(fila, 4).toString();
+                java.sql.Time hora = java.sql.Time.valueOf((String) this.jTableRevista.getValueAt(fila, 5).toString());
+
+                jTextNumero.setText("" + id);
+                jTextTitulo.setText(tit);
+                jTextAyo.setText(ay);
+                jTextIssn.setText(iss);
+                jTextPrecio.setText(pre);
+                jTextHoraventa.setText(String.valueOf(hora));
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
@@ -416,13 +408,12 @@ public class JFrameRevistas extends javax.swing.JFrame {
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
         // TODO add your handling code here:
-        int fila=this.jTableRevista.getSelectedRow();
-        if (fila==-1) {
+        int fila = this.jTableRevista.getSelectedRow();
+        if (fila == -1) {
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro de la tabla");
-        }
-        else{
-            int id=Integer.parseInt((String)this.jTableRevista.getValueAt(fila, 0).toString());
-            DAORevista dao=new DAORevista();
+        } else {
+            int id = Integer.parseInt((String) this.jTableRevista.getValueAt(fila, 0).toString());
+            DAORevista dao = new DAORevista();
             dao.Eliminar(id);
             obtenerDatos();
         }
